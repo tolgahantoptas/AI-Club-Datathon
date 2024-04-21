@@ -88,9 +88,36 @@ plt.xlabel('Close')
 plt.ylabel('Frekans')
 plt.show()
 
+
 # Close değerlerinin zaman serisi grafiği
 df.set_index('date')['close'].plot(figsize=(15, 7))
 plt.title('Zaman İçinde Close Değerleri')
 plt.xlabel('Tarih')
 plt.ylabel('Close')
 plt.show()
+
+# Base Model
+from sklearn.metrics import mean_squared_log_error
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+
+# Verileri hazırlama
+X = df[['open', 'high', 'low']]
+y = df['close']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Modeli eğitme
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Tahmin yapma
+y_pred = model.predict(X_test)
+
+# MSLE hesaplama
+msle_initial = mean_squared_log_error(y_test, y_pred)
+print("Initial MSLE:", msle_initial)
+# Initial MSLE: 6.101201479451752e-07
+
+
+
+
