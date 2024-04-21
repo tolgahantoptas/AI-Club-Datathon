@@ -80,9 +80,6 @@ predicted_close_sgd = sgd_model.predict(X_missing)
 # Eksik değerleri doldur
 df.loc[df['close'].isnull(), 'close'] = predicted_close_sgd
 
-df.isna().sum()
-
-
 # Close sütununun dağılımını incele
 plt.figure(figsize=(10, 6))
 sns.histplot(df['close'], kde=True)
@@ -90,7 +87,6 @@ plt.title('Close Değerlerinin Dağılımı')
 plt.xlabel('Close')
 plt.ylabel('Frekans')
 plt.show()
-
 
 # Close değerlerinin zaman serisi grafiği
 df.set_index('date')['close'].plot(figsize=(15, 7))
